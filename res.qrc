@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/bilibili.png</file>
+        <file>res/close.png</file>
+        <file>res/edit.png</file>
+        <file>res/max.png</file>
+        <file>res/menu.png</file>
+        <file>res/min.png</file>
+        <file>res/normal.png</file>
+        <file>res/progress.png</file>
+        <file>res/Qt.png</file>
+        <file>res/radio.png</file>
+        <file>res/skin.png</file>
+        <file>res/switch.png</file>
+        <file>res/table.png</file>
+        <file>res/title.png</file>
+    </qresource>
+</RCC>
