@@ -1,0 +1,10 @@
+QWidget#centralwidget
+{
+    background-color: qlineargradient(
+        spread:pad,
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 %1, stop:1 %2);
+    border: 1px solid white;
+    border-color: rgba(255, 255, 255, 128);
+    border-radius: 25px;
+}

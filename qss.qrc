@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qss/setTheme.qss</file>
+        <file>qss/windowControl.qss</file>
+    </qresource>
+</RCC>

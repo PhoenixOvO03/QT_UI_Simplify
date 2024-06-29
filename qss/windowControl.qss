@@ -1,0 +1,39 @@
+
+QPushButton:hover
+{
+    margin:5;
+    background: qradialgradient(
+        cx:0.5, cy:0.5, radius: 0.5,
+        fx:0.5, fy:0.5,
+        stop:0 #80ffffff, stop:1 #00ffffff)
+}
+
+QPushButton#bilibiliBtn
+{
+    border-image: url(:/res/bilibili.png);
+}
+
+QPushButton#minBtn
+{
+    border-image: url(:/res/min.png);
+}
+
+QPushButton#closeBtn
+{
+    border-image: url(:/res/close.png);
+}
+
+QPushButton#skinBtn
+{
+    border-image: url(:/res/skin.png);
+}
+
+QPushButton#buttonsPageBtn
+{
+    border-image: url(:/res/switch.png);
+}
+
+QPushButton#progressPageBtn
+{
+    border-image: url(:/res/progress.png);
+}

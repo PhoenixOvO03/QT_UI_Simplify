@@ -1,21 +1,27 @@
 #include "framelesswindow.h"
 #include "./ui_framelesswindow.h"
 
-#include <QMouseEvent>
 #include <windows.h>
+#include <QPropertyAnimation>
+#include <QDesktopServices>
+#include <QFile>
 
 FramelessWindow::FramelessWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::FramelessWindow)
 {
     ui->setupUi(this);
+    // 数据初始化
     m_resizePadding = 5;
-    m_beginMove = false;
+    m_pageIndex = PagesIndex::ButtonsPage;
 
+    // 窗口设置
     setWindowFlags(Qt::FramelessWindowHint); // 无边框窗口
-    setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_TranslucentBackground); // 透明窗口
     setWindowIcon(QIcon(":/res/Qt.png")); // 标题图标
-    ui->TitleImage->setPixmap(QPixmap(":/res/title.png").scaled(200, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    uiStyleInit(); // 初始化ui界面样式
+    uiConnectInit(); // ui各控件槽函数连接
 
     // 设置属性产生win窗体效果 移动到边缘半屏或者最大化
     HWND hwnd = (HWND)this->winId();
@@ -28,39 +34,54 @@ FramelessWindow::~FramelessWindow()
     delete ui;
 }
 
-void FramelessWindow::mousePressEvent(QMouseEvent *event)
+void FramelessWindow::setBackgroundColor(QString topColor, QString bottomColor)
 {
-    if (ui->TitleImage->rect().contains(mapFromGlobal(QCursor().pos())))
+    QFile qss(":/qss/setTheme.qss");
+    qss.open(QFile::ReadOnly);
+    QString styleSheet = QString(qss.readAll()).arg(topColor, bottomColor);
+    qss.close();
+    ui->centralwidget->setStyleSheet(styleSheet);
+}
+
+void FramelessWindow::setPageIndex(int index)
+{
+    if (index == PagesIndex::SkinPage)
     {
-        if(event->buttons() & Qt::LeftButton)
-        {
-            m_pressPos = event->pos();
-            m_beginMove = true;
-        }
+        if (ui->body->currentIndex() == PagesIndex::SkinPage) setPageIndex(m_pageIndex); // 恢复页面
+        else ui->body->setCurrentIndex(index); // 打开主题页面
+    }
+    else
+    {
+        ui->body->setCurrentIndex(index);
+        m_pageIndex = index;
     }
 }
 
-void FramelessWindow::mouseMoveEvent(QMouseEvent *event)
+void FramelessWindow::uiStyleInit()
 {
-    if(m_beginMove && event->buttons() & Qt::LeftButton)
-        move(event->pos() + pos() - m_pressPos);
+    ui->body->setCurrentIndex(PagesIndex::ButtonsPage);
+    ui->titleImage->setPixmap(QPixmap(":/res/title.png").scaled(200, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    setBackgroundColor("#c0444444", "#c0444444");
+
+    QFile qss(":/qss/windowControl.qss");
+    qss.open(QFile::ReadOnly);
+    QString styleSheet = qss.readAll();
+    qss.close();
+    setStyleSheet(styleSheet);
 }
 
-void FramelessWindow::mouseReleaseEvent(QMouseEvent *event)
+void FramelessWindow::uiConnectInit()
 {
-    m_beginMove = false;
-}
-
-void FramelessWindow::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    if (ui->TitleImage->rect().contains(mapFromGlobal(QCursor().pos())))
-    {
-        if(event->buttons() & Qt::LeftButton)
-        {
-            if (isMaximized()) showNormal();
-            else showMaximized();
-        }
-    }
+    // 主题
+    connect(ui->skinPage, &SkinPage::selectSkin, this, &FramelessWindow::setBackgroundColor);
+    // 标题栏
+    connect(ui->minBtn, &QPushButton::clicked, this, &FramelessWindow::showMinimized);
+    connect(ui->closeBtn, &QPushButton::clicked, this, &FramelessWindow::close);
+    // 侧边栏
+    connect(ui->bilibiliBtn, &QPushButton::clicked, this, [&](){QDesktopServices::openUrl(QUrl("https://space.bilibili.com/387426555"));});
+    connect(ui->buttonsPageBtn, &QPushButton::clicked, this, [&](){this->setPageIndex(PagesIndex::ButtonsPage);});
+    connect(ui->progressPageBtn, &QPushButton::clicked, this, [&](){this->setPageIndex(PagesIndex::ProgressPage);});
+    connect(ui->skinBtn, &QPushButton::clicked, this, [&](){this->setPageIndex(PagesIndex::SkinPage);});
 }
 
 bool FramelessWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
@@ -90,22 +111,19 @@ bool FramelessWindow::nativeEvent(const QByteArray &eventType, void *message, qi
         //鼠标移动到四个角,这个消息是当鼠标移动或者有鼠标键按下时候发出的
         *result = 0;
 
-        // if (left && top) *result = HTTOPLEFT;
-        // else if (left && bottom) *result = HTBOTTOMLEFT;
-        // else if (right && top) *result = HTTOPRIGHT;
-        // else if (right && bottom) *result = HTBOTTOMRIGHT;
-        /*else*/ if (left) *result = HTLEFT;
+        if (left) *result = HTLEFT;
         else if (right) *result = HTRIGHT;
         else if (top) *result = HTTOP;
         else if (bottom) *result = HTBOTTOM;
 
-        // 处理拉伸
-        if (0 != *result) {
+        if (0 != *result) // 处理拉伸
+        {
             return true;
         }
 
-        // 鼠标在标题栏处时拖动产生半屏全屏效果
-        if (ui->TitleImage->rect().contains(pos)) {
+        if (ui->titleImage->geometry().contains(pos)) // 鼠标在标题栏处时拖动产生半屏全屏效果
+        // if (ui->TitleImage->rect().contains(pos))
+        {
             *result = HTCAPTION;
             return true;
         }
@@ -115,11 +133,5 @@ bool FramelessWindow::nativeEvent(const QByteArray &eventType, void *message, qi
         break;
     }
 
-    return false;
+    return QWidget::nativeEvent(eventType, message, result);
 }
-
-void FramelessWindow::on_closeBtn_clicked()
-{
-    this->close();
-}
-
