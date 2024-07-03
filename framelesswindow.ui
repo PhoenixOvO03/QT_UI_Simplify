@@ -71,6 +71,25 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="onTopBtn">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="minBtn">
         <property name="minimumSize">
          <size>
@@ -204,127 +223,8 @@
       <item>
        <widget class="QStackedWidget" name="body">
         <widget class="SkinPage" name="skinPage"/>
-        <widget class="QWidget" name="buttonsPage">
-         <widget class="QLabel" name="label_2">
-          <property name="geometry">
-           <rect>
-            <x>220</x>
-            <y>150</y>
-            <width>101</width>
-            <height>61</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>buttons</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton">
-          <property name="geometry">
-           <rect>
-            <x>220</x>
-            <y>90</y>
-            <width>80</width>
-            <height>18</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="geometry">
-           <rect>
-            <x>220</x>
-            <y>230</y>
-            <width>80</width>
-            <height>18</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="geometry">
-           <rect>
-            <x>330</x>
-            <y>180</y>
-            <width>80</width>
-            <height>18</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="progressPage">
-         <widget class="QLabel" name="label">
-          <property name="geometry">
-           <rect>
-            <x>140</x>
-            <y>140</y>
-            <width>81</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>progress</string>
-          </property>
-         </widget>
-         <widget class="QSlider" name="horizontalSlider">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>240</y>
-            <width>160</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-         <widget class="QSlider" name="verticalSlider">
-          <property name="geometry">
-           <rect>
-            <x>390</x>
-            <y>90</y>
-            <width>16</width>
-            <height>160</height>
-           </rect>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-         <widget class="QScrollBar" name="horizontalScrollBar">
-          <property name="geometry">
-           <rect>
-            <x>140</x>
-            <y>90</y>
-            <width>160</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-         <widget class="QScrollBar" name="verticalScrollBar">
-          <property name="geometry">
-           <rect>
-            <x>470</x>
-            <y>90</y>
-            <width>16</width>
-            <height>160</height>
-           </rect>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </widget>
+        <widget class="ButtonsPage" name="buttonsPage"/>
+        <widget class="ProgressPage" name="progressPage"/>
        </widget>
       </item>
      </layout>
@@ -337,6 +237,18 @@
    <class>SkinPage</class>
    <extends>QWidget</extends>
    <header location="global">skinpage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ButtonsPage</class>
+   <extends>QWidget</extends>
+   <header>buttonspage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ProgressPage</class>
+   <extends>QWidget</extends>
+   <header>progresspage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

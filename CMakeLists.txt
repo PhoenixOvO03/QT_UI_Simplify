@@ -18,6 +18,9 @@ set(PROJECT_SOURCES
         framelesswindow.h
         framelesswindow.ui
         skinpage.h skinpage.cpp
+        buttonspage.h buttonspage.cpp
+        progresspage.h progresspage.cpp
+        circleprogress.h circleprogress.cpp
 )
 
 INCLUDE_DIRECTORIES(

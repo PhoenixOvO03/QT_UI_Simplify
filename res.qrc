@@ -14,5 +14,7 @@
         <file>res/switch.png</file>
         <file>res/table.png</file>
         <file>res/title.png</file>
+        <file>res/onTopOff.png</file>
+        <file>res/onTopOn.png</file>
     </qresource>
 </RCC>
