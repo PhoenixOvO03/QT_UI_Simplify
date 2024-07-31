@@ -30,6 +30,13 @@ CircleProgress::CircleProgress(QWidget *parent)
     });
 }
 
+CircleProgress::CircleProgress(QString preText, QString postText, QWidget *parent)
+    : CircleProgress(parent)
+{
+    m_preText = preText;
+    m_postText = postText;
+}
+
 void CircleProgress::setValue(int value)
 {
     // 越界
@@ -71,7 +78,7 @@ void CircleProgress::paintGray(QPainter &painter)
 void CircleProgress::paintProgress(QPainter &painter)
 {
     painter.save();
-    painter.setPen(QPen(QBrush(Qt::green), 10, Qt::SolidLine, Qt::RoundCap));
+    painter.setPen(QPen(QBrush(m_currProgress > 80 ? Qt::red : Qt::green), 10, Qt::SolidLine, Qt::RoundCap));
     QRect rectangle = rect();
     rectangle.adjust(10, 10, -10, -10);
     painter.drawArc(rectangle, -210 * 16, m_currProgress * -16 * 3);

@@ -184,6 +184,25 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="tablePageBtn">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -225,6 +244,7 @@
         <widget class="SkinPage" name="skinPage"/>
         <widget class="ButtonsPage" name="buttonsPage"/>
         <widget class="ProgressPage" name="progressPage"/>
+        <widget class="TablePage" name="tablePage"/>
        </widget>
       </item>
      </layout>
@@ -249,6 +269,12 @@
    <class>ProgressPage</class>
    <extends>QWidget</extends>
    <header>progresspage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TablePage</class>
+   <extends>QWidget</extends>
+   <header>tablepage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

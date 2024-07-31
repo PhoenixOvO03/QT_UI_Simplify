@@ -14,13 +14,16 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        framelesswindow.cpp
-        framelesswindow.h
-        framelesswindow.ui
+        # 窗口和页面
+        framelesswindow.h framelesswindow.cpp framelesswindow.ui
         skinpage.h skinpage.cpp
         buttonspage.h buttonspage.cpp
         progresspage.h progresspage.cpp
+        tablepage.h tablepage.cpp
+
         circleprogress.h circleprogress.cpp
+        tabel.h tabel.cpp
+        util/compositionwindoweffect.h util/compositionwindoweffect.cpp
 )
 
 INCLUDE_DIRECTORIES(
@@ -33,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         res.qrc
         qss.qrc
+        README.md
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET QT_UI_Simplify APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -52,7 +56,9 @@ else()
     endif()
 endif()
 
-target_link_libraries(QT_UI_Simplify PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(QT_UI_Simplify PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+    user32 dwmapi # win api实现模糊效果
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

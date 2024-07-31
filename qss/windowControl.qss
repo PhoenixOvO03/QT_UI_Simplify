@@ -37,3 +37,8 @@ QPushButton#progressPageBtn
 {
     border-image: url(:/res/progress.png);
 }
+
+QPushButton#tablePageBtn
+{
+    border-image: url(:/res/table.png);
+}

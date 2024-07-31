@@ -19,7 +19,8 @@ public:
     enum PagesIndex{
         SkinPage,
         ButtonsPage,
-        ProgressPage
+        ProgressPage,
+        TablePage,
     };
 
 public:

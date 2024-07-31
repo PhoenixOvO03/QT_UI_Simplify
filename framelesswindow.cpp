@@ -1,5 +1,6 @@
 #include "framelesswindow.h"
 #include "./ui_framelesswindow.h"
+#include "util/compositionwindoweffect.h"
 
 #include <windows.h>
 #include <QPropertyAnimation>
@@ -8,6 +9,9 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QMessageBox>
+#include <QGraphicsBlurEffect>
+#include <QScreen>
+#include <QPainter>
 
 FramelessWindow::FramelessWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,6 +36,9 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     HWND hwnd = (HWND)this->winId();
     DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
     ::SetWindowLong(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME | WS_CAPTION);
+
+    // 毛玻璃效果
+    CompositionWindowEffect::setAreoEffect((HWND)(hwnd));
 }
 
 FramelessWindow::~FramelessWindow()
@@ -129,6 +136,7 @@ void FramelessWindow::uiConnectInit()
     connect(ui->bilibiliBtn, &QPushButton::clicked, this, [&](){QDesktopServices::openUrl(QUrl("https://space.bilibili.com/387426555"));});
     connect(ui->buttonsPageBtn, &QPushButton::clicked, this, [&](){this->setPageIndex(PagesIndex::ButtonsPage);});
     connect(ui->progressPageBtn, &QPushButton::clicked, this, [&](){this->setPageIndex(PagesIndex::ProgressPage);});
+    connect(ui->tablePageBtn, &QPushButton::clicked, this, [&](){this->setPageIndex(PagesIndex::TablePage);});
     connect(ui->skinBtn, &QPushButton::clicked, this, [&](){this->setPageIndex(PagesIndex::SkinPage);});
     connect(ui->onTopBtn, &QPushButton::clicked, this, &FramelessWindow::setOnTop);
 }

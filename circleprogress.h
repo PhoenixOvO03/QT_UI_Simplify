@@ -9,7 +9,8 @@ class CircleProgress : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CircleProgress(QWidget *parent = nullptr);
+    explicit CircleProgress(QWidget *parent);
+    explicit CircleProgress(QString preText = "", QString postText = "", QWidget* parent = nullptr);
 
     void setValue(int value);
     inline void setPreText(QString preText){m_preText = preText;}
